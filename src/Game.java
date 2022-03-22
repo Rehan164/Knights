@@ -8,9 +8,7 @@ public class Game {
 
     public static void main(String[] args) {
 
-
         //Cursor blankCursor;
-
 
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -21,14 +19,16 @@ public class Game {
 
         JPanel panel = new GamePanel(width, height);
 
-        // Transparent 16 x 16 pixel cursor image.
-        //BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
+        /*
+        Transparent 16 x 16 pixel cursor image.
+        BufferedImage cursorImg = new BufferedImage(16, 16, BufferedImage.TYPE_INT_ARGB);
 
-        // Create a new blank cursor.
-        //blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
+         Create a new blank cursor.
+        blankCursor = Toolkit.getDefaultToolkit().createCustomCursor(cursorImg, new Point(0, 0), "blank cursor");
 
-        //window.setCursor(blankCursor);
-        //panel.setCursor(blankCursor);
+        window.setCursor(blankCursor);
+        panel.setCursor(blankCursor);
+         */
 
 
         panel.setFocusable(true);
