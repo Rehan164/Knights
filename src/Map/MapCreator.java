@@ -8,6 +8,7 @@ import Sprites.Tiles.Tile;
 import Sprites.Tiles.Space;
 import Sprites.Tiles.Wall;
 
+//Fix so that we can use new res stuff
 public class MapCreator {
     
     private String[] map;
