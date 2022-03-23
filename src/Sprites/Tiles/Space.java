@@ -10,9 +10,4 @@ public class Space extends Tile{
         super(image, location);
     }
 
-    @Override
-    public void draw(Graphics2D g2) {
-        //empty cuz it is a space
-    }
-
 }

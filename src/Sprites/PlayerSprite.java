@@ -124,4 +124,28 @@ public class PlayerSprite extends SpriteBase {
     }
     //#endregion
 
+    public void flipHorz(Graphics2D g2, int currentMouseX, int currentMouseY) {
+        super.flipHorz(g2);
+
+        hand = new Point(hand(currentMouseX, currentMouseY));
+
+        //Under Hand
+        g2.setColor(Color.CYAN);
+        g2.drawRect(hand.x - 1, hand.y - 1, 2, 2);
+        g2.setColor(Color.black);
+
+        //#region Drawing Health bar
+        g2.setColor(Color.GRAY);
+        g2.fillRect(location.x - 4, location.y - 5, image.getWidth() + 8, 2);
+
+        g2.setColor(Color.red);
+
+        double widthOfHealth = (double)(image.getWidth() + 8) / maxHealth;
+
+        widthOfHealth = widthOfHealth * health;
+        g2.fillRect(location.x - 4, location.y - 5, (int)widthOfHealth, 2);
+
+        g2.setColor(Color.BLACK);
+        //#endregion
+    }
 }

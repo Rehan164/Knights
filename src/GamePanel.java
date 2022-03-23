@@ -1,4 +1,7 @@
 import Constants.GameConstants;
+import Constants.PlayerConstants;
+import Sprites.PlayerSprite;
+import Sprites.SpriteResourceManager;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,11 +16,17 @@ import java.awt.event.MouseMotionListener;
 
 public class GamePanel extends JPanel {
     private Timer timer;
+    private final boolean[] keys;
 
     private int currentMouseX;
     private int currentMouseY;
 
-    private final boolean[] keys;
+    //#region Game Variables
+
+    private PlayerSprite player;
+    private int previousDir;
+
+    //endregion
 
     public GamePanel(int w, int h){
         
@@ -32,10 +41,41 @@ public class GamePanel extends JPanel {
         setupMouse();
         //#endregion
 
+        //#region Setting Player and Weapons
+
+        player = new PlayerSprite(SpriteResourceManager.blueKnight, new Point(400, 400), 100);
+
+        //#endregion
+
+        //#region Set Variables
+
+        //1 for right -1 for left
+        previousDir = 1;
+
+        //#endregion
+
     }
 
     //Update
     public void update(){
+
+        //#region Movment
+        if(keys[KeyEvent.VK_W]) {
+            player.move(0, -PlayerConstants.PLAYER_MOVEMENT_SPEED);
+        }
+        if(keys[KeyEvent.VK_S]) {
+            player.move(0, PlayerConstants.PLAYER_MOVEMENT_SPEED);
+        }
+        if(keys[KeyEvent.VK_A]) {
+            previousDir = -1;
+            player.move(-PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
+        }
+        if(keys[KeyEvent.VK_D]) {
+            previousDir = 1;
+            player.move(PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
+        }
+        //#endregion
+
         repaint();
     }
 
@@ -45,6 +85,13 @@ public class GamePanel extends JPanel {
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
+        if(previousDir == -1) {
+            player.flipHorz(g2, currentMouseX, currentMouseY);
+        }
+        else {
+            player.draw(g2, currentMouseX, currentMouseY);
+        }
 
     }
 

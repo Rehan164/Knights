@@ -15,7 +15,7 @@ public class SpriteBase {
     }
 
     public void draw(Graphics2D g2){
-        g2.drawImage(image, location.x, location.y, null);
+        g2.drawImage(image, location.x, location.y, getWidth(), getHeight(), null);
     }
 
     public boolean intersects(SpriteBase other){
@@ -37,6 +37,10 @@ public class SpriteBase {
 
     public void flipVert(Graphics2D g2) {
         g2.drawImage(image, location.x, location.y + image.getHeight() + 3, image.getWidth(), -image.getHeight(), null);
+    }
+
+    public void flipHorz(Graphics2D g2) {
+        g2.drawImage(image, location.x + image.getWidth(), location.y, -image.getWidth(), image.getHeight(), null);
     }
 
 }

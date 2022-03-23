@@ -28,7 +28,6 @@ public class WeaponSpriteBase extends SpriteBase{
     public WeaponSpriteBase(BufferedImage image, Point location, Point handle, Point barrelExit, PlayerSprite player, int fireRatePerFrame, int magSize, int reloadingTime) {
 
         super(image, location);
-
         this.handle = handle;
         this.player = player;
         this.fireRatePerFrame = fireRatePerFrame;
@@ -47,7 +46,7 @@ public class WeaponSpriteBase extends SpriteBase{
 
     }
 
-    public void draw(Graphics2D g2, int currentMouseX, int currentMouseY) {
+    public void draw(Graphics2D g2, int scaleW, int scaleH, int currentMouseX, int currentMouseY) {
 
         theta = PlayerSprite.degreeFinder(currentMouseX, currentMouseY);
 
