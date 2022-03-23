@@ -12,7 +12,7 @@ public class SpriteResourceManager {
     //    ImageIO line.
 
 
-    public static BufferedImage pistolWithLongBarrel, smallBullet2, assaultRifle, blueKnight;
+    public static BufferedImage pistolWithLongBarrel, smallBullet2, assaultRifle, blueKnight, knightHand;
 
 
     static{
@@ -29,6 +29,8 @@ public class SpriteResourceManager {
             Image bKnight = ImageIO.read(new File("./res/Characters/Knight.png"));
             bKnight = bKnight.getScaledInstance(bKnight.getWidth(null) * 2, bKnight.getHeight(null) * 2, Image.SCALE_DEFAULT);
             blueKnight = toBufferedImage(bKnight);
+
+            knightHand = ImageIO.read(new File("./res/Characters/KnightHand.png"));
             //#endregion
 
         }

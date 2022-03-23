@@ -46,7 +46,7 @@ public class WeaponSpriteBase extends SpriteBase{
 
     }
 
-    public void draw(Graphics2D g2, int scaleW, int scaleH, int currentMouseX, int currentMouseY) {
+    public void draw(Graphics2D g2, int currentMouseX, int currentMouseY) {
 
         theta = PlayerSprite.degreeFinder(currentMouseX, currentMouseY);
 
@@ -76,17 +76,6 @@ public class WeaponSpriteBase extends SpriteBase{
 
         g2.rotate(Math.toRadians(theta));
         g2.translate(-hand.x, -hand.y);
-
-        g2.setColor(Color.RED);
-        g2.drawRect(hand.x - 1, hand.y - 1, 2, 2);
-
-        g2.setColor(Color.GREEN);
-
-        g2.drawRect(player.getX() + (player.getWidth()/2) + xPos - 1, player.getY() + (player.getHeight()/2) + yPos - 1, 2, 2);
-
-        g2.setColor(Color.black);
-        //Want to get a certain point on the image and draw it here (with barrelExit.x , barrelExit.y) without rotating it
-        
     }
 
 

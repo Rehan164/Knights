@@ -2,6 +2,8 @@ import Constants.GameConstants;
 import Constants.PlayerConstants;
 import Sprites.PlayerSprite;
 import Sprites.SpriteResourceManager;
+import Sprites.Weapons.BulletProjectile;
+import Sprites.Weapons.WeaponSpriteBase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +14,7 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.util.ArrayList;
 
 
 public class GamePanel extends JPanel {
@@ -23,8 +26,15 @@ public class GamePanel extends JPanel {
 
     //#region Game Variables
 
+    //Player
     private PlayerSprite player;
-    private int previousDir;
+
+    //Weapons
+    private WeaponSpriteBase currentWeapon;
+    private WeaponSpriteBase fullAutoSniperRifle;
+    private WeaponSpriteBase pistol;
+
+    private ArrayList<BulletProjectile> bullets =  new ArrayList<>();
 
     //endregion
 
@@ -44,13 +54,16 @@ public class GamePanel extends JPanel {
         //#region Setting Player and Weapons
 
         player = new PlayerSprite(SpriteResourceManager.blueKnight, new Point(400, 400), 100);
+        fullAutoSniperRifle = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
+        pistol = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
+
+        currentWeapon = pistol;
 
         //#endregion
 
         //#region Set Variables
 
-        //1 for right -1 for left
-        previousDir = 1;
+
 
         //#endregion
 
@@ -59,7 +72,7 @@ public class GamePanel extends JPanel {
     //Update
     public void update(){
 
-        //#region Movment
+        //#region Movement
         if(keys[KeyEvent.VK_W]) {
             player.move(0, -PlayerConstants.PLAYER_MOVEMENT_SPEED);
         }
@@ -67,14 +80,33 @@ public class GamePanel extends JPanel {
             player.move(0, PlayerConstants.PLAYER_MOVEMENT_SPEED);
         }
         if(keys[KeyEvent.VK_A]) {
-            previousDir = -1;
             player.move(-PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
         }
         if(keys[KeyEvent.VK_D]) {
-            previousDir = 1;
             player.move(PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
         }
         //#endregion
+
+        for (int i = 0; i < bullets.size(); i++) {
+
+            bullets.get(i).firedMove();
+
+            if(bullets.get(i).getX() < 0 || bullets.get(i).getX() > getWidth() || bullets.get(i).getY() < 0 || bullets.get(i).getY() > getWidth()) {
+                bullets.remove(i);
+                i --;
+            }
+        }
+
+//        for (int i = 0; i < bullets.size(); i++) {
+//            for (EnemySprite enemySprite : enemies) {
+//                if(bullets.get(i).intersects(enemySprite)){
+//                    enemySprite.takingDamage(10); //change this to take damage from the players weapon
+//                    bullets.remove(i);
+//                    break;
+//                }
+//            }
+//        }
+
 
         repaint();
     }
@@ -86,13 +118,18 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        if(previousDir == -1) {
+        if(player.getAngle() > 90 && player.getAngle() < 270) {
             player.flipHorz(g2, currentMouseX, currentMouseY);
         }
         else {
             player.draw(g2, currentMouseX, currentMouseY);
         }
 
+        currentWeapon.draw(g2, currentMouseX, currentMouseY);
+
+        for (BulletProjectile bulletProjectile : bullets) {
+            bulletProjectile.draw(g2);
+        }
     }
 
     //#region Inputs
@@ -133,7 +170,10 @@ public class GamePanel extends JPanel {
         addMouseListener(new MouseListener() {
             @Override
             public void mousePressed(MouseEvent e) {
-                
+
+                bullets.add(new BulletProjectile(SpriteResourceManager.smallBullet2, new Point(currentWeapon.barrelExitLocationX(), currentWeapon.barrelExitLocationY()), currentWeapon.currentAngle(), 15));
+                currentWeapon.setMagSize(currentWeapon.getMagSize() - 1);
+
             }
 
             @Override

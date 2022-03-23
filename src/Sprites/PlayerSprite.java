@@ -9,6 +9,7 @@ public class PlayerSprite extends SpriteBase {
     private BufferedImage image;
     private static Point hand;
     private static BufferedImage currentImage;
+    private double angle;
 
     private int health;
     private final int maxHealth;
@@ -31,10 +32,8 @@ public class PlayerSprite extends SpriteBase {
 
         hand = new Point(hand(currentMouseX, currentMouseY));
 
-        //Under Hand
-        g2.setColor(Color.CYAN);
-        g2.drawRect(hand.x - 1, hand.y - 1, 2, 2);
-        g2.setColor(Color.black);
+        g2.drawImage(SpriteResourceManager.knightHand, hand.x - SpriteResourceManager.knightHand.getWidth() / 2, hand.y - SpriteResourceManager.knightHand.getHeight(), SpriteResourceManager.knightHand.getWidth(), SpriteResourceManager.knightHand.getHeight(), null);
+
 
         //#region Drawing Health bar
         g2.setColor(Color.GRAY);
@@ -76,7 +75,7 @@ public class PlayerSprite extends SpriteBase {
 
     //Player Hand
     public Point hand(int mouseX, int mouseY) {
-        double angle = degreeFinder(mouseX, mouseY);
+        angle = degreeFinder(mouseX, mouseY);
 
         int z = currentImage.getWidth() / 2;
 
@@ -130,9 +129,8 @@ public class PlayerSprite extends SpriteBase {
         hand = new Point(hand(currentMouseX, currentMouseY));
 
         //Under Hand
-        g2.setColor(Color.CYAN);
-        g2.drawRect(hand.x - 1, hand.y - 1, 2, 2);
-        g2.setColor(Color.black);
+
+        //g2.drawImage(SpriteResourceManager.knightHand, hand.x, hand.y, SpriteResourceManager.knightHand.getWidth(), SpriteResourceManager.knightHand.getHeight(), null);
 
         //#region Drawing Health bar
         g2.setColor(Color.GRAY);
@@ -148,4 +146,6 @@ public class PlayerSprite extends SpriteBase {
         g2.setColor(Color.BLACK);
         //#endregion
     }
+
+    public double getAngle() {return angle;}
 }
