@@ -1,38 +1,40 @@
 package Constants;
 
 public class Maps {
-    
+
+    /*
+    X = Walls
+    D = Door
+    E = Empty
+    Nothing = floor
+     */
+
     public static final String[] testMap = {
-        "                              ",
-        " XXXXXXXXXXXXXXXXXXXXXXXXXXXX ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X   XXXXXXXXXXXXXXXXXXXX   X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X   XXXXXXXXXXXXXXXXXXXX   X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " X                          X ",
-        " XXXXXXXXXXXXXXXXXXXXXXXXXXXX ",
-        "                              "
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EXXXXXXXXXXDDDXXXXXXXXXXE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EX                     XE",
+            "EXXXXXXXXXXDDDXXXXXXXXXXE",
+            "EEEEEEEEEEX   XEEEEEEEEEE",
     };
 
 }

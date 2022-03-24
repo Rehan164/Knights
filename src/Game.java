@@ -13,8 +13,8 @@ public class Game {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
-        int width = 600; // 1440
-        int height = 600; // 800
+        int width = 800; // 1440
+        int height = 800; // 800
         //window.setBounds(0, 0, width, height + 22); //(x, y, w, h) 22 due to title bar.
 
         JPanel panel = new GamePanel(width, height);

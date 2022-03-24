@@ -3,6 +3,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.nio.Buffer;
 
 public class SpriteResourceManager {
     // to add an image to the environment:
@@ -11,8 +12,11 @@ public class SpriteResourceManager {
     // 3. Initialize the variable by copying and pasting and modifying the
     //    ImageIO line.
 
+    public static int SF = 2;
 
     public static BufferedImage pistolWithLongBarrel, smallBullet2, assaultRifle, blueKnight, knightHand;
+
+    public static BufferedImage floor, floorWShadow, wall, empty;
 
 
     static{
@@ -27,10 +31,29 @@ public class SpriteResourceManager {
 
             //#region Characters
             Image bKnight = ImageIO.read(new File("./res/Characters/Knight.png"));
-            bKnight = bKnight.getScaledInstance(bKnight.getWidth(null) * 2, bKnight.getHeight(null) * 2, Image.SCALE_DEFAULT);
+            bKnight = bKnight.getScaledInstance(bKnight.getWidth(null) * SF, bKnight.getHeight(null) * SF, Image.SCALE_DEFAULT);
             blueKnight = toBufferedImage(bKnight);
 
             knightHand = ImageIO.read(new File("./res/Characters/KnightHand.png"));
+            //#endregion
+
+            //#region Walls
+            Image f = ImageIO.read(new File("./res/Map/Walls/tile029.png"));
+            f = f.getScaledInstance(f.getWidth(null) * SF, f.getHeight(null) * SF, Image.SCALE_DEFAULT);
+            floor = toBufferedImage(f);
+
+            Image fWS = ImageIO.read(new File("./res/Map/Walls/tile018.png"));
+            fWS = fWS.getScaledInstance(fWS.getWidth(null) * SF, fWS.getHeight(null) * SF, Image.SCALE_DEFAULT);
+            floorWShadow = toBufferedImage(fWS);
+
+            Image w = ImageIO.read(new File("./res/Map/Walls/tile009.png"));
+            w = w.getScaledInstance(w.getWidth(null) * SF, w.getHeight(null) * SF, Image.SCALE_DEFAULT);
+            wall = toBufferedImage(w);
+
+            Image e = ImageIO.read(new File("./res/Map/Walls/tile058.png"));
+            e = e.getScaledInstance(e.getWidth(null) * SF, e.getHeight(null) * SF, Image.SCALE_DEFAULT);
+            empty = toBufferedImage(e);
+
             //#endregion
 
         }

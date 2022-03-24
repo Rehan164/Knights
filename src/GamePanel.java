@@ -1,5 +1,7 @@
 import Constants.GameConstants;
+import Constants.Maps;
 import Constants.PlayerConstants;
+import Map.MapCreator;
 import Sprites.PlayerSprite;
 import Sprites.SpriteResourceManager;
 import Sprites.Weapons.BulletProjectile;
@@ -38,6 +40,12 @@ public class GamePanel extends JPanel {
 
     //endregion
 
+    //#region Map
+
+    private MapCreator testMap;
+
+    //#endregion
+
     public GamePanel(int w, int h){
         
         //#region Enables window size, keys, frame limit
@@ -63,7 +71,7 @@ public class GamePanel extends JPanel {
 
         //#region Set Variables
 
-
+        testMap = new MapCreator(Maps.testMap);
 
         //#endregion
 
@@ -117,6 +125,8 @@ public class GamePanel extends JPanel {
 
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
+
+        testMap.drawMap(g2);
 
         if(player.getAngle() > 90 && player.getAngle() < 270) {
             player.flipHorz(g2, currentMouseX, currentMouseY);
