@@ -1,7 +1,9 @@
+import Constants.Fonts;
 import Constants.GameConstants;
 import Constants.Maps;
 import Constants.PlayerConstants;
 import Map.MapCreator;
+import Sprites.EnemySprite;
 import Sprites.PlayerSprite;
 import Sprites.SpriteResourceManager;
 import Sprites.Weapons.BulletProjectile;
@@ -25,6 +27,7 @@ public class GamePanel extends JPanel {
 
     private int currentMouseX;
     private int currentMouseY;
+    private int currentFrame;
 
     //#region Game Variables
 
@@ -38,13 +41,11 @@ public class GamePanel extends JPanel {
 
     private ArrayList<BulletProjectile> bullets =  new ArrayList<>();
 
-    //endregion
+    //Enemy
+    private ArrayList<EnemySprite> enemies = new ArrayList<>();
 
-    //#region Map
-
+    //Maps
     private MapCreator testMap;
-
-    //#endregion
 
     public GamePanel(int w, int h){
         
@@ -52,8 +53,6 @@ public class GamePanel extends JPanel {
         setSize(w, h);
 
         keys = new boolean[256];
-        timer = new Timer(1000/ GameConstants.frameLimiter, e -> update());
-        timer.start();
 
         setupKeys();
         setupMouse();
@@ -63,17 +62,27 @@ public class GamePanel extends JPanel {
 
         player = new PlayerSprite(SpriteResourceManager.blueKnight, new Point(400, 400), 100);
         fullAutoSniperRifle = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
-        pistol = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
-
+        pistol = new WeaponSpriteBase(SpriteResourceManager.pistolWithLongBarrel, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(3,7), new Point(14,3), player, 7, 12, 20);
         currentWeapon = pistol;
+
+        //#endregion
+
+        //#region Test Setting for Enemies
+
+        enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(300,300), 2, 100));
 
         //#endregion
 
         //#region Set Variables
 
-        testMap = new MapCreator(Maps.testMap);
+        testMap = new MapCreator(Maps.testMap, 1);
+
+        currentFrame = 0;
 
         //#endregion
+
+        timer = new Timer(1000/ GameConstants.frameLimiter, e -> update());
+        timer.start();
 
     }
 
@@ -81,16 +90,16 @@ public class GamePanel extends JPanel {
     public void update(){
 
         //#region Movement
-        if(keys[KeyEvent.VK_W]) {
+        if(keys[KeyEvent.VK_W] && !testMap.checksIfPlayerCollidesWithWalls(player.top())) {
             player.move(0, -PlayerConstants.PLAYER_MOVEMENT_SPEED);
         }
-        if(keys[KeyEvent.VK_S]) {
+        if(keys[KeyEvent.VK_S] && !testMap.checksIfPlayerCollidesWithWalls(player.bottom())) {
             player.move(0, PlayerConstants.PLAYER_MOVEMENT_SPEED);
         }
-        if(keys[KeyEvent.VK_A]) {
+        if(keys[KeyEvent.VK_A] && !testMap.checksIfPlayerCollidesWithWalls(player.left())) {
             player.move(-PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
         }
-        if(keys[KeyEvent.VK_D]) {
+        if(keys[KeyEvent.VK_D] && !testMap.checksIfPlayerCollidesWithWalls(player.right())) {
             player.move(PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
         }
         //#endregion
@@ -99,22 +108,56 @@ public class GamePanel extends JPanel {
 
             bullets.get(i).firedMove();
 
-            if(bullets.get(i).getX() < 0 || bullets.get(i).getX() > getWidth() || bullets.get(i).getY() < 0 || bullets.get(i).getY() > getWidth()) {
+            if(testMap.checksIfPlayerCollidesWithWalls(bullets.get(i))){
+                bullets.remove(i);
+                i--;
+            }
+
+            else if(bullets.get(i).getX() < 0 || bullets.get(i).getX() > getWidth() || bullets.get(i).getY() < 0 || bullets.get(i).getY() > getWidth()) {
                 bullets.remove(i);
                 i --;
             }
         }
 
-//        for (int i = 0; i < bullets.size(); i++) {
-//            for (EnemySprite enemySprite : enemies) {
-//                if(bullets.get(i).intersects(enemySprite)){
-//                    enemySprite.takingDamage(10); //change this to take damage from the players weapon
-//                    bullets.remove(i);
-//                    break;
-//                }
-//            }
-//        }
+        //#region Enemy Stuff
+        for (int i = 0; i < bullets.size(); i++) {
+            for (EnemySprite enemySprite : enemies) {
+                if(bullets.get(i).intersects(enemySprite)){
+                    enemySprite.takingDamage(10); //change this to take damage from the players weapon
+                    bullets.remove(i);
+                    break;
+                }
+            }
+        }
 
+        if(currentFrame % 10 == 0) {
+            for (EnemySprite enemySprite : enemies) {
+                if(player.intersects(enemySprite)) {
+                    player.takingDamage(10);
+                }
+            }
+        }
+
+        for (int i = 0; i < enemies.size(); i++) {
+            if(enemies.get(i).getHealth() == 0) {
+                enemies.remove(i);
+                i--;
+            }
+            else {
+                if(!player.intersects(enemies.get(i))) {
+                    enemies.get(i).move( enemies.get(i).moveXYPoint(player).x , enemies.get(i).moveXYPoint(player).y);
+                }
+            }
+        }
+
+        //#endregion
+
+        currentFrame ++;
+
+        if(enemies.size() <= 0) {
+            testMap.setNumOfWaves();
+            testMap.setTileMap();
+        }
 
         repaint();
     }
@@ -140,6 +183,15 @@ public class GamePanel extends JPanel {
         for (BulletProjectile bulletProjectile : bullets) {
             bulletProjectile.draw(g2);
         }
+
+        for (EnemySprite enemySprite : enemies) {
+            enemySprite.drawing(g2, player);
+        }
+
+        g2.setColor(Color.white);
+        g2.setFont(Fonts.plainKa1);
+        g2.drawString("Current Wave - " + testMap.getNumOfWave(), 10,20);
+
     }
 
     //#region Inputs

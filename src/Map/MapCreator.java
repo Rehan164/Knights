@@ -5,22 +5,25 @@ import java.awt.image.BufferedImage;
 
 import Sprites.SpriteBase;
 import Sprites.SpriteResourceManager;
+import Sprites.Tiles.Door;
 import Sprites.Tiles.Tile;
 import Sprites.Tiles.Space;
 import Sprites.Tiles.Wall;
 
-//Fix so that we can use new res stuff
+
 public class MapCreator {
     
     private String[] map;
     private Tile[][] tileMap;
+    private int numOfWaves;
 
-    public MapCreator(String[] map) {
+    public MapCreator(String[] map, int numOfWaves) {
         
         this.map = map;
-        
-       tileMap = new Tile[map.length][map[0].length()];
-       setTileMap();
+        this.numOfWaves = numOfWaves;
+
+        tileMap = new Tile[map.length][map[0].length()];
+        setTileMap();
 
     }
 
@@ -37,16 +40,6 @@ public class MapCreator {
     public void setTileMap() {
         for (int j = 0; j < map.length; j ++) {
             for (int i = 1; i <= map[j].length(); i++) {
-//                if(map[j].charAt(i - 1) == 'X') {
-//
-//                    BufferedImage tileImage = new BufferedImage(20,20, BufferedImage.TYPE_INT_RGB);
-//                    tileMap[j][i-1] = new Wall(tileImage, new Point((i-1) * 20, j * 20));
-//
-//                }
-//                else {
-//                    BufferedImage tileImage = new BufferedImage(20,20, BufferedImage.TYPE_INT_RGB);
-//                    tileMap[j][i-1] = new Space(tileImage, new Point((i-1) * 20, j * 20));
-//                }
 
                 if(map[j].charAt(i - 1) == 'X') {
                     BufferedImage tileImage = SpriteResourceManager.wall;
@@ -56,7 +49,13 @@ public class MapCreator {
 
                 else if (map[j].charAt(i - 1) == 'E') {
                     BufferedImage tileImage = SpriteResourceManager.empty;
-                    tileMap[j][i-1] = new Wall(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF));
+                    tileMap[j][i-1] = new Tile(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF));
+
+                }
+
+                else if (map[j].charAt(i - 1) == 'D') {
+                    BufferedImage tileImage = SpriteResourceManager.floor;
+                    tileMap[j][i-1] = new Door(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF), numOfWaves);
 
                 }
 
@@ -88,6 +87,11 @@ public class MapCreator {
                 if((tileMap[i][j] instanceof Wall) && tileMap[i][j].intersects(collider)) {
                     return true;
                 }
+
+                if((tileMap[i][j] instanceof Door) && tileMap[i][j].intersects(collider) && ((Door) tileMap[i][j]).getIsActive()) {
+                     return true;
+                }
+
             }
         }
 
@@ -95,4 +99,14 @@ public class MapCreator {
 
     }
 
+    public int getNumOfWave() {return numOfWaves;}
+
+    public void setNumOfWaves() {
+
+        if(numOfWaves > 0) {
+
+            numOfWaves --;
+
+        }
+    }
 }

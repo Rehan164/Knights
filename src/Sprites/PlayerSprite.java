@@ -115,7 +115,7 @@ public class PlayerSprite extends SpriteBase {
     }
 
     public SpriteBase right() {
-        return new SpriteBase(new BufferedImage(1, image.getHeight() - 2, BufferedImage.TYPE_3BYTE_BGR), new Point(location.x + image.getWidth(), location.y + 1));
+        return new SpriteBase(new BufferedImage(1, image.getHeight() - 2, BufferedImage.TYPE_3BYTE_BGR), new Point(location.x + 2 + image.getWidth(), location.y + 1));
     }
 
     public SpriteBase left() {

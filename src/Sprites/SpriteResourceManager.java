@@ -18,6 +18,8 @@ public class SpriteResourceManager {
 
     public static BufferedImage floor, floorWShadow, wall, empty;
 
+    public static BufferedImage firstEnemy;
+
 
     static{
         try{
@@ -53,6 +55,14 @@ public class SpriteResourceManager {
             Image e = ImageIO.read(new File("./res/Map/Walls/tile058.png"));
             e = e.getScaledInstance(e.getWidth(null) * SF, e.getHeight(null) * SF, Image.SCALE_DEFAULT);
             empty = toBufferedImage(e);
+
+            //#endregion
+
+            //#region Enemies
+
+            Image enemy1 = ImageIO.read(new File("./res/Enemies/Enemy1.png"));
+            enemy1 = enemy1.getScaledInstance(enemy1.getWidth(null) * SF, enemy1.getHeight(null) * SF, Image.SCALE_DEFAULT);
+            firstEnemy = toBufferedImage(enemy1);
 
             //#endregion
 
