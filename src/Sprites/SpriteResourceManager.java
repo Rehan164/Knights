@@ -20,6 +20,8 @@ public class SpriteResourceManager {
 
     public static BufferedImage firstEnemy;
 
+    public static BufferedImage skull;
+
 
     static{
         try{
@@ -63,6 +65,11 @@ public class SpriteResourceManager {
             Image enemy1 = ImageIO.read(new File("./res/Enemies/Enemy1.png"));
             enemy1 = enemy1.getScaledInstance(enemy1.getWidth(null) * SF, enemy1.getHeight(null) * SF, Image.SCALE_DEFAULT);
             firstEnemy = toBufferedImage(enemy1);
+
+
+            Image deadHead = ImageIO.read(new File("./res/Map/Walls/tile028.png"));
+            deadHead = deadHead.getScaledInstance(deadHead.getWidth(null) * SF, deadHead.getHeight(null) * SF, Image.SCALE_DEFAULT);
+            skull = toBufferedImage(deadHead);
 
             //#endregion
 

@@ -6,6 +6,7 @@ public class Maps {
     X = Walls
     D = Door
     E = Empty
+    S = Spawn for Enemies
     Nothing = floor
      */
 
@@ -19,13 +20,13 @@ public class Maps {
             "EEEEEEXXXXXDDDXXXXXEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
+            "EEEEEEX  S     S  XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
-            "EEEEEEX           XEEEEEE",
-            "EEEEEEX           XEEEEEE",
+            "EEEEEEX  S     S  XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEXXXXXDDDXXXXXEEEEEE",
