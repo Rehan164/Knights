@@ -7,6 +7,7 @@ public class Maps {
     D = Door
     E = Empty
     S = Spawn for Enemies
+    P = Where player spawns
     Nothing = floor
      */
 
@@ -36,6 +37,34 @@ public class Maps {
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
+    };
+
+    public static final String[] startMap = {
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEXXXXX   XXXXXEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX     P     XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEX           XEEEEEE",
+            "EEEEEEXXXXXXXXXXXXXEEEEEE",
+            "EEEEEEEEEEEEEEEEEEEEEEEEE",
+            "EEEEEEEEEEEEEEEEEEEEEEEEE",
+            "EEEEEEEEEEEEEEEEEEEEEEEEE",
+            "EEEEEEEEEEEEEEEEEEEEEEEEE",
+            "EEEEEEEEEEEEEEEEEEEEEEEEE",
+            "EEEEEEEEEEEEEEEEEEEEEEEEE",
     };
 
 }

@@ -5,10 +5,7 @@ import java.awt.image.BufferedImage;
 
 import Sprites.SpriteBase;
 import Sprites.SpriteResourceManager;
-import Sprites.Tiles.Door;
-import Sprites.Tiles.Tile;
-import Sprites.Tiles.Space;
-import Sprites.Tiles.Wall;
+import Sprites.Tiles.*;
 
 
 public class MapCreator {
@@ -56,7 +53,11 @@ public class MapCreator {
                 else if (map[j].charAt(i - 1) == 'D') {
                     BufferedImage tileImage = SpriteResourceManager.floor;
                     tileMap[j][i-1] = new Door(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF), numOfWaves);
+                }
 
+                else if (map[j].charAt(i - 1) == 'S') {
+                    BufferedImage tileImage = SpriteResourceManager.skull;
+                    tileMap[j][i-1] = new Spawner(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF), numOfWaves);
                 }
 
                 else {

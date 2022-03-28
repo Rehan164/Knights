@@ -6,6 +6,8 @@ import Map.MapCreator;
 import Sprites.EnemySprite;
 import Sprites.PlayerSprite;
 import Sprites.SpriteResourceManager;
+import Sprites.Tiles.Spawner;
+import Sprites.Tiles.Tile;
 import Sprites.Weapons.BulletProjectile;
 import Sprites.Weapons.WeaponSpriteBase;
 
@@ -69,13 +71,20 @@ public class GamePanel extends JPanel {
 
         //#region Test Setting for Enemies
 
-        enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(300,300), 2, 100));
+        testMap = new MapCreator(Maps.testMap, 2);
+
+        Tile[][] currentMap = testMap.getTileMap();
+        for (Tile[] tiles : currentMap) {
+            for (Tile t: tiles) {
+                if(t instanceof Spawner && ((Spawner) t).getIsActive()) {
+                    enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(t.getX(),t.getY()), 2, 100));
+                }
+            }
+        }
 
         //#endregion
 
         //#region Set Variables
-
-        testMap = new MapCreator(Maps.testMap, 5);
 
         currentFrame = 0;
 
@@ -150,6 +159,8 @@ public class GamePanel extends JPanel {
             }
         }
 
+
+
         //#endregion
 
         currentFrame ++;
@@ -159,7 +170,14 @@ public class GamePanel extends JPanel {
             testMap.setTileMap();
 
             if(testMap.getNumOfWave() > 0) {
-                enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(300,300), 2, 100));
+                Tile[][] currentMap = testMap.getTileMap();
+                for (Tile[] tiles : currentMap) {
+                    for (Tile t: tiles) {
+                        if(t instanceof Spawner && ((Spawner) t).getIsActive()) {
+                            enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(t.getX(),t.getY()), 2, 100));
+                        }
+                    }
+                }
             }
         }
 
