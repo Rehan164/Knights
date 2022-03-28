@@ -75,7 +75,7 @@ public class GamePanel extends JPanel {
 
         //#region Set Variables
 
-        testMap = new MapCreator(Maps.testMap, 1);
+        testMap = new MapCreator(Maps.testMap, 5);
 
         currentFrame = 0;
 
@@ -157,6 +157,10 @@ public class GamePanel extends JPanel {
         if(enemies.size() <= 0) {
             testMap.setNumOfWaves();
             testMap.setTileMap();
+
+            if(testMap.getNumOfWave() > 0) {
+                enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(300,300), 2, 100));
+            }
         }
 
         repaint();
