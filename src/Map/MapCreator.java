@@ -46,7 +46,7 @@ public class MapCreator {
 
                 else if (map[j].charAt(i - 1) == 'E') {
                     BufferedImage tileImage = SpriteResourceManager.empty;
-                    tileMap[j][i-1] = new Tile(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF));
+                    tileMap[j][i-1] = new Wall(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF));
 
                 }
 
@@ -68,7 +68,16 @@ public class MapCreator {
                     else {
                         tileImage = SpriteResourceManager.floor;
                     }
-                    tileMap[j][i-1] = new Space(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF));
+                    if(map[j].charAt(i - 1) == '0') {
+                        tileMap[j][i-1] = new changeFloor(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF), 0);
+                    }
+                    else if(map[j].charAt(i - 1) == '1') {
+                        tileMap[j][i-1] = new changeFloor(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF), 1);
+                    }
+                    else {
+                        tileMap[j][i-1] = new Space(tileImage, new Point((i-1) * 16 * SpriteResourceManager.SF, j * 16 * SpriteResourceManager.SF));
+
+                    }
                 }
 
 

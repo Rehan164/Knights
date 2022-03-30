@@ -5,10 +5,10 @@ import java.awt.image.BufferedImage;
 
 public class PlayerSprite extends SpriteBase {
 
-    private static Point location;
+    private Point location;
     private BufferedImage image;
-    private static Point hand;
-    private static BufferedImage currentImage;
+    private Point hand;
+    private BufferedImage currentImage;
     private double angle;
 
     private int health;
@@ -52,7 +52,7 @@ public class PlayerSprite extends SpriteBase {
     }
 
     //This is where you can get the degree based of the player
-    public static double degreeFinder(int mouseX, int mouseY) {
+    public double degreeFinder(int mouseX, int mouseY) {
 
         double x = location.x + (currentImage.getWidth() / 2.0);
         double y = location.y + (currentImage.getHeight() / 2.0);
@@ -86,7 +86,7 @@ public class PlayerSprite extends SpriteBase {
 
     }
 
-    public static Point playerHand() {
+    public Point playerHand() {
         return hand;
     }
 

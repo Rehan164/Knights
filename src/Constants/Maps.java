@@ -11,8 +11,11 @@ public class Maps {
     Nothing = floor
      */
 
+
+
+
     public static final String[] testMap = {
-            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX222XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
@@ -21,7 +24,7 @@ public class Maps {
             "EEEEEEXXXXXDDDXXXXXEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
-            "EEEEEEX  S     S  XEEEEEE",
+            "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
             "EEEEEEX           XEEEEEE",
@@ -36,11 +39,11 @@ public class Maps {
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
-            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX000XEEEEEEEEEE",
     };
 
     public static final String[] startMap = {
-            "EEEEEEEEEEX   XEEEEEEEEEE",
+            "EEEEEEEEEEX111XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",
             "EEEEEEEEEEX   XEEEEEEEEEE",

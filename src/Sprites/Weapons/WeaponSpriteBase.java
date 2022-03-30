@@ -42,16 +42,16 @@ public class WeaponSpriteBase extends SpriteBase{
         barrelOffsetAngle = Math.toDegrees(Math.atan(y / x));
 
         //Sets the hand location getter
-        hand = PlayerSprite.playerHand();
+        hand = player.playerHand();
 
     }
 
     public void draw(Graphics2D g2, int currentMouseX, int currentMouseY) {
 
-        theta = PlayerSprite.degreeFinder(currentMouseX, currentMouseY);
+        theta = player.degreeFinder(currentMouseX, currentMouseY);
 
         //Refreshes the hands location getter
-        hand = PlayerSprite.playerHand();
+        hand = player.playerHand();
 
         setLocation(hand.x - handle.x, hand.y - handle.y);
 

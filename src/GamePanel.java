@@ -8,6 +8,7 @@ import Sprites.PlayerSprite;
 import Sprites.SpriteResourceManager;
 import Sprites.Tiles.Spawner;
 import Sprites.Tiles.Tile;
+import Sprites.Tiles.changeFloor;
 import Sprites.Weapons.BulletProjectile;
 import Sprites.Weapons.WeaponSpriteBase;
 
@@ -47,7 +48,10 @@ public class GamePanel extends JPanel {
     private ArrayList<EnemySprite> enemies = new ArrayList<>();
 
     //Maps
-    private MapCreator testMap;
+    private MapCreator floor1;
+    private MapCreator floor0;
+
+    private MapCreator currentMap;
 
     public GamePanel(int w, int h){
         
@@ -63,18 +67,22 @@ public class GamePanel extends JPanel {
         //#region Setting Player and Weapons
 
         player = new PlayerSprite(SpriteResourceManager.blueKnight, new Point(400, 400), 100);
-        fullAutoSniperRifle = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
-        pistol = new WeaponSpriteBase(SpriteResourceManager.pistolWithLongBarrel, new Point(PlayerSprite.playerHand().x ,PlayerSprite.playerHand().y), new Point(3,7), new Point(14,3), player, 7, 12, 20);
+
+        fullAutoSniperRifle = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(player.playerHand().x ,player.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
+        pistol = new WeaponSpriteBase(SpriteResourceManager.pistolWithLongBarrel, new Point(player.playerHand().x ,player.playerHand().y), new Point(3,7), new Point(14,3), player, 7, 12, 20);
         currentWeapon = pistol;
 
         //#endregion
 
         //#region Test Setting for Enemies
 
-        testMap = new MapCreator(Maps.testMap, 2);
+        floor1 = new MapCreator(Maps.testMap, 2);
+        floor0 = new MapCreator(Maps.startMap, 0);
 
-        Tile[][] currentMap = testMap.getTileMap();
-        for (Tile[] tiles : currentMap) {
+        currentMap = floor0;
+
+        Tile[][] CM = currentMap.getTileMap();
+        for (Tile[] tiles : CM) {
             for (Tile t: tiles) {
                 if(t instanceof Spawner && ((Spawner) t).getIsActive()) {
                     enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(t.getX(),t.getY()), 2, 100));
@@ -99,16 +107,16 @@ public class GamePanel extends JPanel {
     public void update(){
 
         //#region Movement
-        if(keys[KeyEvent.VK_W] && !testMap.checksIfPlayerCollidesWithWalls(player.top())) {
+        if(keys[KeyEvent.VK_W] && !currentMap.checksIfPlayerCollidesWithWalls(player.top())) {
             player.move(0, -PlayerConstants.PLAYER_MOVEMENT_SPEED);
         }
-        if(keys[KeyEvent.VK_S] && !testMap.checksIfPlayerCollidesWithWalls(player.bottom())) {
+        if(keys[KeyEvent.VK_S] && !currentMap.checksIfPlayerCollidesWithWalls(player.bottom())) {
             player.move(0, PlayerConstants.PLAYER_MOVEMENT_SPEED);
         }
-        if(keys[KeyEvent.VK_A] && !testMap.checksIfPlayerCollidesWithWalls(player.left())) {
+        if(keys[KeyEvent.VK_A] && !currentMap.checksIfPlayerCollidesWithWalls(player.left())) {
             player.move(-PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
         }
-        if(keys[KeyEvent.VK_D] && !testMap.checksIfPlayerCollidesWithWalls(player.right())) {
+        if(keys[KeyEvent.VK_D] && !currentMap.checksIfPlayerCollidesWithWalls(player.right())) {
             player.move(PlayerConstants.PLAYER_MOVEMENT_SPEED, 0);
         }
         //#endregion
@@ -117,7 +125,7 @@ public class GamePanel extends JPanel {
 
             bullets.get(i).firedMove();
 
-            if(testMap.checksIfPlayerCollidesWithWalls(bullets.get(i))){
+            if(currentMap.checksIfPlayerCollidesWithWalls(bullets.get(i))){
                 bullets.remove(i);
                 i--;
             }
@@ -163,15 +171,13 @@ public class GamePanel extends JPanel {
 
         //#endregion
 
-        currentFrame ++;
-
         if(enemies.size() <= 0) {
-            testMap.setNumOfWaves();
-            testMap.setTileMap();
+            currentMap.setNumOfWaves();
+            currentMap.setTileMap();
 
-            if(testMap.getNumOfWave() > 0) {
-                Tile[][] currentMap = testMap.getTileMap();
-                for (Tile[] tiles : currentMap) {
+            if(currentMap.getNumOfWave() > 0) {
+                Tile[][] CM = currentMap.getTileMap();
+                for (Tile[] tiles : CM) {
                     for (Tile t: tiles) {
                         if(t instanceof Spawner && ((Spawner) t).getIsActive()) {
                             enemies.add(new EnemySprite(SpriteResourceManager.firstEnemy, new Point(t.getX(),t.getY()), 2, 100));
@@ -180,6 +186,41 @@ public class GamePanel extends JPanel {
                 }
             }
         }
+
+        Tile[][] CM = currentMap.getTileMap();
+        for (Tile[] tiles : CM) {
+            for (Tile t: tiles) {
+                if(t instanceof changeFloor) {
+                    if(player.intersects(t)) {
+
+                        if(((changeFloor) t).getFloorNum() == 0) {
+                            currentMap = floor0;
+
+                            player = new PlayerSprite(SpriteResourceManager.blueKnight, new Point(player.getX(), 50), 100);
+
+                            fullAutoSniperRifle = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(player.playerHand().x ,player.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
+                            pistol = new WeaponSpriteBase(SpriteResourceManager.pistolWithLongBarrel, new Point(player.playerHand().x ,player.playerHand().y), new Point(3,7), new Point(14,3), player, 7, 12, 20);
+                            currentWeapon = pistol;
+
+                        }
+
+                        else if(((changeFloor) t).getFloorNum() == 1) {
+                            currentMap = floor1;
+
+                            player = new PlayerSprite(SpriteResourceManager.blueKnight, new Point(player.getX(), 700), 100);
+
+                            fullAutoSniperRifle = new WeaponSpriteBase(SpriteResourceManager.assaultRifle, new Point(player.playerHand().x ,player.playerHand().y), new Point(11,7), new Point(38,4), player, 5, 30, 40);
+                            pistol = new WeaponSpriteBase(SpriteResourceManager.pistolWithLongBarrel, new Point(player.playerHand().x ,player.playerHand().y), new Point(3,7), new Point(14,3), player, 7, 12, 20);
+                            currentWeapon = pistol;
+
+                        }
+                    }
+                }
+            }
+        }
+
+
+        currentFrame ++;
 
         repaint();
     }
@@ -191,7 +232,7 @@ public class GamePanel extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
 
-        testMap.drawMap(g2);
+        currentMap.drawMap(g2);
 
         if(player.getAngle() > 90 && player.getAngle() < 270) {
             player.flipHorz(g2, currentMouseX, currentMouseY);
@@ -212,7 +253,7 @@ public class GamePanel extends JPanel {
 
         g2.setColor(Color.white);
         g2.setFont(Fonts.plainKa1);
-        g2.drawString("Current Wave - " + testMap.getNumOfWave(), 10,20);
+        g2.drawString("Current Wave - " + currentMap.getNumOfWave(), 10,20);
 
     }
 
